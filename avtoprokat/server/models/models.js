@@ -12,7 +12,7 @@ const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-const BasketCar = sequelize.define('basket_cars', {
+const BasketCar = sequelize.define('basket_car', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
@@ -48,6 +48,7 @@ const CarInfo = sequelize.define('car_info', {
 const TypeBrand = sequelize.define('type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
+
 
 User.hasOne(Basket)
 Basket.belongsTo(User)
@@ -87,4 +88,8 @@ module.exports = {
     TypeBrand,
     CarInfo
 }
+
+
+
+
 
