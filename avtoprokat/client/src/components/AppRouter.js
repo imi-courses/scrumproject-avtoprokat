@@ -1,8 +1,20 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Routes, Route, Redirect } from "react-router-dom";
+import { authRoutes, publicRoutes } from "../routes";
 
 const AppRouter = () => {
-  return <div></div>;
+  const isAuth = false;
+  return (
+    <Routes>
+      {isAuth === true &&
+        authRoutes.map(({ path, Component }) => (
+          <Route key={path} path={path} Component={Component} exact />
+        ))}
+      {publicRoutes.map(({ path, Component }) => (
+        <Route key={path} path={path} Component={Component} exact />
+      ))}
+    </Routes>
+  );
 };
 
 export default AppRouter;

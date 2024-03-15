@@ -5,7 +5,7 @@ import AppRouter from "./components/AppRouter";
 
 function App() {
   return (
-    <BrowserRouter className="App">
+    <BrowserRouter>
       <AppRouter />
     </BrowserRouter>
   );
