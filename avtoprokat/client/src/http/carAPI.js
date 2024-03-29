@@ -25,8 +25,15 @@ export const createCar = async (car) => {
   return data;
 };
 
-export const fetchCars = async () => {
-  const { data } = await $host.get("api/car");
+export const fetchCars = async (typeId, brandId, page, limit = 5) => {
+  const { data } = await $host.get("api/car", {
+    params: {
+      typeId,
+      brandId,
+      page,
+      limit,
+    },
+  });
   return data;
 };
 
