@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserStore from "./store/UserStore";
-import DeviceStore from "./store/DeviceStore";
+import CarStore from "./store/CarStore";
 
 export const Context = createContext(null);
 
@@ -13,7 +13,7 @@ root.render(
   <Context.Provider
     value={{
       user: new UserStore(),
-      device: new DeviceStore(),
+      car: new CarStore(),
     }}
   >
     <React.StrictMode>

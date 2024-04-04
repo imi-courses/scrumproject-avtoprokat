@@ -10,21 +10,21 @@ import { ADMIN_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { useNavigate } from "react-router-dom";
 
 const NavBar = observer(() => {
-  const { user } = useContext(Context);
+  const { user: userStore } = useContext(Context);
   const navigate = useNavigate();
 
   const logOut = () => {
-    user.setUser({});
-    user.setIsAuth(false);
+    userStore.setUser({});
+    userStore.setIsAuth(false);
   };
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
         <NavLink style={{ color: "white" }} to={SHOP_ROUTE}>
-          КупиДевайс
+          Автопрокат №1
         </NavLink>
-        {user.isAuth ? (
+        {userStore.isAuth ? (
           <Nav className="ml-auto" style={{ color: "white" }}>
             <Button
               variant={"outline-light"}

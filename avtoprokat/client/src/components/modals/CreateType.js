@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { createType } from "../../http/carAPI";
 
 const CreateType = ({ show, onHide }) => {
   const [value, setValue] = useState("");
   const addType = () => {
-    CreateType({ name: value }).then((data) => {
+    createType({ name: value }).then((data) => {
       setValue("");
       onHide();
     });

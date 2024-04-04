@@ -4,10 +4,10 @@ import { authRoutes, publicRoutes } from "../routes";
 import { Context } from "../index";
 
 const AppRouter = () => {
-  const { user } = useContext(Context);
+  const { user: userStore } = useContext(Context);
   return (
     <Routes>
-      {user.isAuth === true &&
+      {userStore.isAuth === true &&
         authRoutes.map(({ path, Component }) => (
           <Route key={path} path={path} Component={Component} exact />
         ))}

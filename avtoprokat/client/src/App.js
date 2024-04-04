@@ -9,14 +9,14 @@ import { check } from "./http/userAPI";
 import { Spinner } from "react-bootstrap";
 
 const App = observer(() => {
-  const { user } = useContext(Context);
+  const { user: userStore } = useContext(Context);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     check()
       .then((data) => {
-        user.setUser(true);
-        user.setIsAuth(true);
+        userStore.setUser(true);
+        userStore.setIsAuth(true);
       })
       .catch()
       .finally(() => setLoading(false));

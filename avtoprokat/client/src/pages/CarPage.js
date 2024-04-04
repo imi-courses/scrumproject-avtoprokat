@@ -3,11 +3,11 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { fetchOneCar } from "../http/carAPI";
 
-const DevicePage = () => {
-  const [device, setDevice] = useState({ info: [] });
+const CarPage = () => {
+  const [car, setCar] = useState({ info: [] });
   const id = useParams();
   useEffect(() => {
-    fetchOneCar(id).then((data) => setDevice(data));
+    fetchOneCar(id).then((data) => setCar(data));
   }, []);
 
   return (
@@ -17,17 +17,17 @@ const DevicePage = () => {
           <Image
             width={300}
             height={300}
-            src={process.env.REACT_APP_API_URL + device.img}
+            src={process.env.REACT_APP_API_URL + car.img}
           />
         </Col>
         <Col md={4}>
           <Row className="d-flex flex-column align-item-center">
-            <h2>{device.name}</h2>
+            <h2>{car.name}</h2>
             <div
               className="d-flex align-item-center justify-content-center"
               style={{ fontSize: 64 }}
             >
-              {device.rating}
+              {car.rating}
             </div>
           </Row>
         </Col>
@@ -41,14 +41,14 @@ const DevicePage = () => {
               border: "5px solid lightgray",
             }}
           >
-            <h3>От: {device.price} руб.</h3>
+            <h3>От: {car.price} руб.</h3>
             <Button variant="outline-dark">Добавить в корзину</Button>
           </Card>
         </Col>
       </Row>
       <Row className="d-flex flex-column m-2">
         <h1>Характеристики</h1>
-        {device.info.map((info, index) => (
+        {car.info.map((info, index) => (
           <Row
             key={info.id}
             style={{
@@ -64,4 +64,4 @@ const DevicePage = () => {
   );
 };
 
-export default DevicePage;
+export default CarPage;

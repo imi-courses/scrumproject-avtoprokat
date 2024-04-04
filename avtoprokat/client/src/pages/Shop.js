@@ -2,35 +2,35 @@ import React, { useContext, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
-import DeviceList from "../components/DeviceList";
+import CarList from "../components/CarList";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 import { fetchBrands, fetchCars, fetchTypes } from "../http/carAPI";
 import Pages from "../components/Pages";
 
 const Shop = observer(() => {
-  const { device } = useContext(Context);
+  const { car: carStore } = useContext(Context);
 
   useEffect(() => {
-    fetchTypes().then((data) => device.setTypes(data));
-    fetchBrands().then((data) => device.setBrands(data));
+    fetchTypes().then((data) => carStore.setTypes(data));
+    fetchBrands().then((data) => carStore.setBrands(data));
     fetchCars(null, null, 1, 3).then((data) => {
-      device.setDevice(data.rows);
-      device.setTotalCount(data.count);
+      carStore.setCars(data.rows);
+      carStore.setTotalCount(data.count);
     });
   }, []);
 
   useEffect(() => {
     fetchCars(
-      device.selectedType.id,
-      device.selectedBrand.id,
-      device.page,
+      carStore.selectedType.id,
+      carStore.selectedBrand.id,
+      carStore.page,
       3
     ).then((data) => {
-      device.setDevice(data.rows);
-      device.setTotalCount(data.count);
+      carStore.setCars(data.rows);
+      carStore.setTotalCount(data.count);
     });
-  }, [device.page, device.selectedType, device.selectedBrand]);
+  }, [carStore.page, carStore.selectedType, carStore.selectedBrand]);
 
   return (
     <Container>
@@ -40,7 +40,7 @@ const Shop = observer(() => {
         </Col>
         <Col md={9}>
           <BrandBar />
-          <DeviceList />
+          <CarList />
           <Pages />
         </Col>
       </Row>

@@ -2,18 +2,23 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Dropdown, Form, Modal } from "react-bootstrap";
 import { Context } from "../..";
 import { observer } from "mobx-react-lite";
-import { fetchBrands, fetchCars, fetchTypes } from "../../http/carAPI";
+import {
+  createCar,
+  fetchBrands,
+  fetchCars,
+  fetchTypes,
+} from "../../http/carAPI";
 
-const CreateDevice = observer(({ show, onHide }) => {
-  const { device: deviceStore } = useContext(Context);
+const CreateCar = observer(({ show, onHide }) => {
+  const { car: carStore } = useContext(Context);
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [file, setFile] = useState(null);
   const [info, setInfo] = useState([]);
   useEffect(() => {
-    fetchTypes().then((data) => deviceStore.setTypes(data));
-    fetchBrands().then((data) => deviceStore.setBrands(data));
-    fetchCars().then((data) => deviceStore.setDevice(data));
+    fetchTypes().then((data) => carStore.setTypes(data));
+    fetchBrands().then((data) => carStore.setBrands(data));
+    fetchCars().then((data) => carStore.setCars(data));
   }, []);
   const addInfo = () => {
     setInfo([...info, { title: "", description: "", number: Date.now() }]);
@@ -37,10 +42,10 @@ const CreateDevice = observer(({ show, onHide }) => {
     formData.append("name", name);
     formData.append("price", `${price}`);
     formData.append("img", file);
-    formData.append("brandId", deviceStore.selectedBrand.id);
-    formData.append("typeId", deviceStore.selectedType.id);
+    formData.append("brandId", carStore.selectedBrand.id);
+    formData.append("typeId", carStore.selectedType.id);
     formData.append("info", JSON.stringify(info));
-    CreateDevice(formData).then((data) => onHide());
+    createCar(formData).then((data) => onHide());
   };
 
   return (
@@ -54,12 +59,12 @@ const CreateDevice = observer(({ show, onHide }) => {
         <Form>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {deviceStore.selectedType.name || "Выберите тип"}
+              {carStore.selectedType.name || "Выберите тип"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {deviceStore.types.map((type) => (
+              {carStore.types.map((type) => (
                 <Dropdown.Item
-                  onClick={() => deviceStore.setSelectedType(type)}
+                  onClick={() => carStore.setSelectedType(type)}
                   key={type.id}
                 >
                   {type.name}
@@ -69,12 +74,12 @@ const CreateDevice = observer(({ show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {deviceStore.selectedBrand.name || "Выберите бренд"}
+              {carStore.selectedBrand.name || "Выберите бренд"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              {deviceStore.brands.map((brand) => (
+              {carStore.brands.map((brand) => (
                 <Dropdown.Item
-                  onClick={() => deviceStore.setSelectedBrand(brand)}
+                  onClick={() => carStore.setSelectedBrand(brand)}
                   key={brand.id}
                 >
                   {brand.name}
@@ -136,4 +141,4 @@ const CreateDevice = observer(({ show, onHide }) => {
   );
 });
 
-export default CreateDevice;
+export default CreateCar;

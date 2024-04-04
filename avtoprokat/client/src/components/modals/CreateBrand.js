@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { createBrand } from "../../http/carAPI";
 
 const CreateBrand = ({ show, onHide }) => {
   const [value, setValue] = useState("");
   const addBrand = () => {
-    CreateBrand({ name: value }).then((data) => {
+    createBrand({ name: value }).then((data) => {
       setValue("");
       onHide();
     });

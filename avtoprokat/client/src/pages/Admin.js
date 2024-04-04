@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import CreateBrand from "../components/modals/CreateBrand";
-import CreateDevice from "../components/modals/CreateDevice";
+import CreateCar from "../components/modals/CreateCar";
 import CreateType from "../components/modals/CreateType";
 
 const Admin = () => {
   const [brandVisible, setBrandVisible] = useState(false);
   const [typeVisible, setTypeVisible] = useState(false);
-  const [deviceVisible, setDeviceVisible] = useState(false);
+  const [carVisible, setCarVisible] = useState(false);
   return (
     <Container className="d-flex flex-column">
       <Button
@@ -27,15 +27,12 @@ const Admin = () => {
       <Button
         variant="outline-dark"
         className="mt-4 p-2"
-        onClick={() => setDeviceVisible(true)}
+        onClick={() => setCarVisible(true)}
       >
-        Добавить устройтво
+        Добавить машину
       </Button>
       <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
-      <CreateDevice
-        show={deviceVisible}
-        onHide={() => setDeviceVisible(false)}
-      />
+      <CreateCar show={carVisible} onHide={() => setCarVisible(false)} />
       <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
     </Container>
   );
