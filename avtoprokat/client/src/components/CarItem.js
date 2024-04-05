@@ -18,7 +18,6 @@ const CarItem = ({ car }) => {
           src={process.env.REACT_APP_API_URL + car.img}
         />
         <div className="text-black-50 mt-1 d-flex justify-content-between align-items-center">
-          <div>Samsung...</div>
           <div>
             <div>{car.rating}</div>
           </div>
