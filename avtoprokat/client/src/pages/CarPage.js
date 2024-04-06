@@ -5,7 +5,7 @@ import { fetchOneCar } from "../http/carAPI";
 
 const CarPage = () => {
   const [car, setCar] = useState({ info: [] });
-  const id = useParams();
+  const { id } = useParams();
   useEffect(() => {
     fetchOneCar(id).then((data) => setCar(data));
   }, []);
@@ -18,6 +18,7 @@ const CarPage = () => {
             width={300}
             height={300}
             src={process.env.REACT_APP_API_URL + car.img}
+            style={{ objectFit: "contain", objectPosition: "center" }}
           />
         </Col>
         <Col md={4}>
@@ -41,7 +42,7 @@ const CarPage = () => {
               border: "5px solid lightgray",
             }}
           >
-            <h3>От: {car.price} руб.</h3>
+            <h3>{car.price} руб.</h3>
             <Button variant="outline-dark">Добавить в корзину</Button>
           </Card>
         </Col>

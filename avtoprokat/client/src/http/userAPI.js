@@ -26,6 +26,7 @@ export const check = async () => {
       Authorization: "Bearer " + localStorage.getItem("token"),
     },
   });
-  localStorage.setItem("token", data.token);
-  return jwtDecode(data.token);
+  if (data) {
+    localStorage.setItem("token", data.token);
+  }
 };

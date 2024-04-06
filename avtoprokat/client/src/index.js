@@ -16,9 +16,7 @@ root.render(
       car: new CarStore(),
     }}
   >
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </Context.Provider>
 );
 

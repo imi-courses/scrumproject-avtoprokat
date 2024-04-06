@@ -16,6 +16,8 @@ const NavBar = observer(() => {
   const logOut = () => {
     userStore.setUser({});
     userStore.setIsAuth(false);
+    localStorage.clear("token");
+    navigate(LOGIN_ROUTE);
   };
 
   return (

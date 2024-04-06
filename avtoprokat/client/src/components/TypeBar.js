@@ -10,8 +10,14 @@ const TypeBar = observer(() => {
       {carStore.types.map((type) => (
         <ListGroup.Item
           style={{ cursor: "pointer" }}
-          active={type.id === carStore.selectedType.id}
-          onClick={() => carStore.setSelectedType(type)}
+          active={type.id === carStore.selectedType?.id}
+          onClick={() => {
+            if (carStore.selectedType && carStore.selectedType.id === type.id) {
+              carStore.setSelectedType(null);
+              return;
+            }
+            carStore.setSelectedType(type);
+          }}
           key={type.id}
         >
           {type.name}

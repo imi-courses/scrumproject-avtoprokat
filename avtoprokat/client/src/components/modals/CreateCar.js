@@ -15,10 +15,14 @@ const CreateCar = observer(({ show, onHide }) => {
   const [price, setPrice] = useState(0);
   const [file, setFile] = useState(null);
   const [info, setInfo] = useState([]);
+
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
     fetchBrands().then((data) => carStore.setBrands(data));
-    fetchCars().then((data) => carStore.setCars(data));
+    fetchCars(null, null, 1, 3).then((data) => {
+      carStore.setCars(data.rows);
+      carStore.setTotalCount(data.count);
+    });
   }, []);
   const addInfo = () => {
     setInfo([...info, { title: "", description: "", number: Date.now() }]);
@@ -52,7 +56,7 @@ const CreateCar = observer(({ show, onHide }) => {
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить устройство
+          Добавить машину
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -91,13 +95,13 @@ const CreateCar = observer(({ show, onHide }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
-            placeholder="Введите название устройства"
+            placeholder="Введите название машины"
           />
           <Form.Control
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="mt-3"
-            placeholder="Введите стоимость устройства"
+            placeholder="Введите стоимость машины"
             type="number"
           />
           <Form.Control className="mt-3" type="file" onChange={selectFile} />
