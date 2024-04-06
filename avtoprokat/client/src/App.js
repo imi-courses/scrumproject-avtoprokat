@@ -13,7 +13,7 @@ const App = observer(() => {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     check()
-      .then((data) => {
+      .then(() => {
         userStore.setUser(userStore.user);
         userStore.setIsAuth(true);
       })

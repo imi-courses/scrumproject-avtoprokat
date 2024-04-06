@@ -28,8 +28,5 @@ export const check = async () => {
   });
   if (data) {
     localStorage.setItem("token", data.token);
-    return jwtDecode(data.token);
-  } else {
-    return 0;
   }
 };
