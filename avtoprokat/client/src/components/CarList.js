@@ -8,8 +8,8 @@ const CarList = observer(() => {
   const { car: carStore } = useContext(Context);
   return (
     <Row className="d-flex">
-      {carStore.cars.map((_car) => (
-        <CarItem key={_car.id} car={_car} />
+      {carStore.cars.map((car) => (
+        <CarItem key={car.id} car={car} />
       ))}
     </Row>
   );

@@ -22,9 +22,9 @@ const Shop = observer(() => {
 
   useEffect(() => {
     fetchCars(
-      carStore.selectedType.id,
-      carStore.selectedBrand.id,
-      carStore.page,
+      carStore.selectedType ? carStore.selectedType.id : null,
+      carStore.selectedBrand ? carStore.selectedBrand.id : null,
+      carStore.page ? carStore.page : 1,
       3
     ).then((data) => {
       carStore.setCars(data.rows);

@@ -12,8 +12,17 @@ const BrandBar = observer(() => {
           style={{ cursor: "pointer", backgroundColor: "#f1f1f1" }}
           key={brand.id}
           className="p-3"
-          onClick={() => carStore.setSelectedBrand(brand)}
-          border={brand.id === carStore.selectedBrand.id ? "danger" : "light"}
+          onClick={() => {
+            if (
+              carStore.selectedBrand &&
+              carStore.selectedBrand.id === brand.id
+            ) {
+              carStore.setSelectedBrand(null);
+              return;
+            }
+            carStore.setSelectedBrand(brand);
+          }}
+          border={brand.id === carStore.selectedBrand?.id ? "danger" : "light"}
         >
           {brand.name}
         </Card>
