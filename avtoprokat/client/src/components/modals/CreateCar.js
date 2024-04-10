@@ -49,7 +49,9 @@ const CreateCar = observer(({ show, onHide }) => {
     formData.append("brandId", carStore.selectedBrand.id);
     formData.append("typeId", carStore.selectedType.id);
     formData.append("info", JSON.stringify(info));
-    createCar(formData).then((data) => onHide());
+    createCar(formData).then((data) => {
+      onHide();
+    });
   };
 
   return (
@@ -63,7 +65,7 @@ const CreateCar = observer(({ show, onHide }) => {
         <Form>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedType.name || "Выберите тип"}
+              {carStore.selectedType?.name || "Выберите тип"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.types.map((type) => (
@@ -78,7 +80,7 @@ const CreateCar = observer(({ show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedBrand.name || "Выберите бренд"}
+              {carStore.selectedBrand?.name || "Выберите бренд"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.brands.map((brand) => (

@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { createBrand } from "../../http/carAPI";
+import { createBrand, fetchBrands } from "../../http/carAPI";
+import { Context } from "../..";
 
 const CreateBrand = ({ show, onHide }) => {
+  const { car: carStore } = useContext(Context);
   const [value, setValue] = useState("");
   const addBrand = () => {
     createBrand({ name: value }).then((data) => {
       setValue("");
       onHide();
+      fetchBrands().then((data) => carStore.setBrands(data));
     });
   };
   return (
