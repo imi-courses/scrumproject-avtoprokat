@@ -26,7 +26,7 @@ const Auth = observer(() => {
       userStore.setIsAuth(true);
       navigate(SHOP_ROUTE);
     } catch (e) {
-      alert(e.response.data.messange());
+      alert("Неправильно указан логин или пароль!");
     }
   };
 

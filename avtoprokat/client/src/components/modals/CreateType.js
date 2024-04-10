@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { createType } from "../../http/carAPI";
+import { createType, fetchTypes } from "../../http/carAPI";
+import { Context } from "../..";
 
 const CreateType = ({ show, onHide }) => {
+  const { car: carStore } = useContext(Context);
   const [value, setValue] = useState("");
   const addType = () => {
     createType({ name: value }).then((data) => {
       setValue("");
       onHide();
+      fetchTypes().then((data) => carStore.setTypes(data));
     });
   };
   return (
