@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { fetchOneCar } from "../http/carAPI";
+import { deleteOneCar, fetchOneCar } from "../http/carAPI";
+import {useNavigate} from "react-router-dom";
+import { SHOP_ROUTE } from "../utils/consts";
 
 const CarPage = () => {
   const [car, setCar] = useState({ info: [] });
@@ -9,6 +11,8 @@ const CarPage = () => {
   useEffect(() => {
     fetchOneCar(id).then((data) => setCar(data));
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <Container className="mt-3">
@@ -44,6 +48,9 @@ const CarPage = () => {
           >
             <h3>{car.price} руб.</h3>
             <Button variant="outline-dark">Добавить в корзину</Button>
+             <Button variant="outline-success" onClick={()=>{deleteOneCar(id); navigate(SHOP_ROUTE)}}>
+          Добавить
+        </Button>
           </Card>
         </Col>
       </Row>

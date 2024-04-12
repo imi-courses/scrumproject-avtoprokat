@@ -61,6 +61,17 @@ class CarController {
         )
         return res.json(car)
     }
+
+     async deleteOne(req, res) {
+        const {id} = req.params
+        const car = await Car.destroy(
+            {
+                where: {id},
+               
+            },
+        )
+        return res.json(car)
+    }
 }
 
 module.exports = new CarController()
