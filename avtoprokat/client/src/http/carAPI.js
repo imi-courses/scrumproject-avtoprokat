@@ -41,3 +41,8 @@ export const fetchOneCar = async (id) => {
   const { data } = await $host.get("api/car/" + id);
   return data;
 };
+
+export const deleteOneCar = async (id) => {
+  const { data } = await $host.delete("api/car/" + id);
+  return data;
+};
