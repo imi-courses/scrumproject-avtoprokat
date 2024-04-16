@@ -5,7 +5,7 @@ import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
 import { observer } from "mobx-react-lite";
 import { Context } from ".";
-import { check } from "./http/userAPI";
+import { check, checkAdmin } from "./http/userAPI";
 import { Spinner } from "react-bootstrap";
 
 const App = observer(() => {
@@ -15,6 +15,14 @@ const App = observer(() => {
     check()
       .then((_) => {
         userStore.setUser(userStore.user);
+        userStore.setIsUser(true);
+        userStore.setIsAuth(false);
+      })
+      .catch(() => {});
+    checkAdmin()
+      .then((_) => {
+        userStore.setUser(userStore.user);
+        userStore.setIsUser(true);
         userStore.setIsAuth(true);
       })
       .catch(() => {})

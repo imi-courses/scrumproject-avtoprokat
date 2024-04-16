@@ -1,8 +1,10 @@
 import Admin from "./pages/Admin";
 import Auth from "./pages/Auth";
-import Basket from "./pages/Basket";
+import UserPage from "./pages/UserPage";
 import CarPage from "./pages/CarPage";
+
 import CarPageAdmin from "./pages/CarPageAdmin";
+
 import Shop from "./pages/Shop";
 import {
   ADMIN_ROUTE,
@@ -11,6 +13,7 @@ import {
   LOGIN_ROUTE,
   REGISTRATION_ROUTE,
   SHOP_ROUTE,
+  USERPAGE_ROUTE,
   EDIT_CAR_ROUTE
 } from "./utils/consts";
 
@@ -28,6 +31,10 @@ export const publicRoutes = [
   {
     path: SHOP_ROUTE,
     Component: Shop,
+  },
+  {
+    path: USERPAGE_ROUTE,
+    Component: UserPage,
   },
   {
     path: LOGIN_ROUTE,
