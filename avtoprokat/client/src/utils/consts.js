@@ -5,3 +5,5 @@ export const SHOP_ROUTE = "/";
 export const BASKET_ROUTE = "/basket";
 export const CAR_ROUTE = "/car";
 export const USERPAGE_ROUTE = "/profile";
+export const EDIT_CAR_ROUTE = "/edit";
+

@@ -50,6 +50,7 @@ class CarController {
     if (!brandId && typeId) {
       cars = await Car.findAndCountAll({ where: { typeId }, limit, offset });
     }
+
     if (brandId && typeId) {
       cars = await Car.findAndCountAll({
         where: { typeId, brandId },
@@ -68,6 +69,19 @@ class CarController {
     });
     return res.json(car);
   }
+
+
+     async deleteOne(req, res) {
+        const {id} = req.params
+        const car = await Car.destroy(
+            {
+                where: {id},
+               
+            },
+        )
+        return res.json(car)
+    }
+
 }
 
 module.exports = new CarController();

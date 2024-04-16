@@ -3,7 +3,7 @@ import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { deleteOneCar, fetchOneCar } from "../http/carAPI";
 import {useNavigate} from "react-router-dom";
-import { SHOP_ROUTE } from "../utils/consts";
+import { ADMIN_ROUTE } from "../utils/consts";
 
 const CarPage = () => {
   const [car, setCar] = useState({ info: [] });
@@ -47,7 +47,8 @@ const CarPage = () => {
             }}
           >
             <h3>{car.price} руб.</h3>
-            <Button variant="outline-dark">Добавить в корзину</Button>            
+            <Button variant="outline-dark">Добавить в корзину</Button>
+             <Button variant="outline-success" onClick={()=>{deleteOneCar(id); navigate(ADMIN_ROUTE)}}>Удалить</Button>
           </Card>
         </Col>
       </Row>
