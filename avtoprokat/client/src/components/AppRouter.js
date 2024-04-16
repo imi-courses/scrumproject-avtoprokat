@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
+
 import { authRoutes, publicRoutes } from "../routes";
 import { Context } from "../index";
 
-const AppRouter = () => {
+const AppRouter = observer(() => {
   const { user: userStore } = useContext(Context);
   return (
     <Routes>
@@ -17,6 +19,6 @@ const AppRouter = () => {
       <Route path="*" element={<Navigate to="/" />} exact />
     </Routes>
   );
-};
+});
 
 export default AppRouter;

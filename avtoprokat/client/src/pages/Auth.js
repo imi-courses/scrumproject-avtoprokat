@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from "../utils/consts";
@@ -22,8 +22,14 @@ const Auth = observer(() => {
       } else {
         data = await registration(email, password);
       }
-      userStore.setUser(userStore.user);
-      userStore.setIsAuth(true);
+      userStore.setUser(data);
+      if (data.role == "USER") {
+        userStore.setIsAuth(false);
+        userStore.setIsUser(true);
+      } else if (data.role == "ADMIN") {
+        userStore.setIsUser(true);
+        userStore.setIsAuth(true);
+      }
       navigate(SHOP_ROUTE);
     } catch (e) {
       alert("Неправильно указан логин или пароль!");
