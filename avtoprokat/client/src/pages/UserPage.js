@@ -17,7 +17,7 @@ const UserPage = () => {
             width={250}
             height={250}
             src={
-              userData.img != null
+              userData.img !== null
                 ? process.env.REACT_APP_API_URL + userData.img
                 : "./default-avatar.jpg"
             }
@@ -28,7 +28,7 @@ const UserPage = () => {
           <Row className="d-flex flex-column align-item-center">
             <h3>
               Email:{" "}
-              {userData.email != null && userData.email != ""
+              {userData.email !== null && userData.email !== ""
                 ? userData.email
                 : "Пусто"}
             </h3>
@@ -36,7 +36,7 @@ const UserPage = () => {
           <Row className="d-flex flex-column align-item-center">
             <h3>
               Фамилия:{" "}
-              {userData.last_name != null && userData.last_name != ""
+              {userData.last_name !== null && userData.last_name !== ""
                 ? userData.last_name
                 : "Пусто"}
             </h3>
@@ -44,7 +44,7 @@ const UserPage = () => {
           <Row className="d-flex flex-column align-item-center">
             <h3>
               Имя:{" "}
-              {userData.first_name != null && userData.first_name != ""
+              {userData.first_name !== null && userData.first_name !== ""
                 ? userData.first_name
                 : "Пусто"}
             </h3>
@@ -52,7 +52,7 @@ const UserPage = () => {
           <Row className="d-flex flex-column align-item-center">
             <h3>
               Отчество:{" "}
-              {userData.middle_name != null && userData.middle_name != ""
+              {userData.middle_name !== null && userData.middle_name !== ""
                 ? userData.middle_name
                 : "Пусто"}
             </h3>
@@ -60,7 +60,7 @@ const UserPage = () => {
           <Row className="d-flex flex-column align-item-center">
             <h3>
               Номер телефона:{" "}
-              {userData.phone_number != null && userData.phone_number != ""
+              {userData.phone_number !== null && userData.phone_number !== ""
                 ? userData.phone_number
                 : "Пусто"}
             </h3>
