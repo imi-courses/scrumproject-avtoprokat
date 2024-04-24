@@ -3,7 +3,7 @@ import { Card, Col, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { CAR_ROUTE } from "../utils/consts";
 const CarItem= ({ car }) => {
-
+  
   const navigate = useNavigate();
   return (
     <Col

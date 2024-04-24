@@ -82,20 +82,20 @@ class CarController {
         return res.json(car)
     }
 
-    async update(req, res, next) {
+    async updateCar(req, res, next) {
     try {
-      let { name, price, id } = req.body;
+      let { name, price, id,brandId,typeId } = req.body;
       if (req.files != null) {
         const { img } = req.files;
         let fileName = uuid.v4() + ".jpg";
-        img.mv(path.resolve(__dirname, "..", "static/userImgs", fileName));
+        img.mv(path.resolve(__dirname, "..", "static/carImgs", fileName));
         const car = Car.update(
           {
             name: name,
             price: price,
-            //brandId: brandId,
-            //typeId: typeId,
-            img: "userImgs/" + fileName,
+            brandId: brandId,
+            typeId: typeId,
+            img: "carImgs/" + fileName,
           },
           { where: { id } }
         );
@@ -105,8 +105,8 @@ class CarController {
           {
             name: name,
             price: price,
-            //brandId: brandId,
-            //typeId: typeId,
+            brandId: brandId,
+            typeId: typeId,
           },
           { where: { id } }
         );

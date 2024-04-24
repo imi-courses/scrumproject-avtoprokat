@@ -7,13 +7,13 @@ import {
   fetchBrands,
   fetchCars,
   fetchTypes,
-  fetchOneCar,
-  deleteOneCar
+  updateCar,
+  deleteOneCar,
+  fetchOneCar
 } from "../../http/carAPI";
 
 const EditCar = observer(({carData, setCarData, show, onHide }) => {
   const { car: carStore } = useContext(Context);
-
 
   const [name, setName] = useState(carData.name);
   const [price, setPrice] = useState(carData.price);
@@ -47,7 +47,28 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     setFile(e.target.files[0]);
   };
 
-   useEffect(() => {
+  const addCarData = () => {
+    const formData = new FormData();
+    formData.append("id", parseInt(carData.id));
+    formData.append("name", name);
+    formData.append("price", `${price}`);
+    //formData.append("brandId", carStore.selectedBrand.id);
+    //formData.append("typeId", carStore.selectedType.id);
+    //formData.append("info", JSON.stringify(info));
+     if (file != null) {
+      formData.append("img", file);
+    }
+    updateCar(formData)
+      .then((_) => {
+        onHide();
+        fetchOneCar().then((data) => setCarData(data));
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
+  };
+
+  useEffect(() => {
     setName(carData.name);
     setPrice(carData.price);
     setInfo(carData.info);
@@ -55,20 +76,6 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     setBrandId(carData.brandId);
     setFile(null);
   }, [carData]);
-  
-
-  const addCar = () => {
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("price", `${price}`);
-    formData.append("img", file);
-    formData.append("brandId", carStore.selectedBrand.id);
-    formData.append("typeId", carStore.selectedType.id);
-    formData.append("info", JSON.stringify(info));
-    createCar(formData).then((data) => {
-      onHide();
-    });
-  };
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
@@ -137,7 +144,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
         <Button variant="outline-danger" onClick={onHide}>
           Закрыть
         </Button>
-        <Button variant="outline-success" onClick={addCar}>
+        <Button variant="outline-success" onClick={addCarData}>
           Сохранить изменения
         </Button>
         

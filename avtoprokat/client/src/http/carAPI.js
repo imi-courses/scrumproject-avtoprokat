@@ -46,3 +46,8 @@ export const deleteOneCar = async (id) => {
   const { data } = await $host.delete("api/car/" + id);
   return data;
 };
+
+export const updateCar = async (car) => {
+  const { data } = await $host.post("api/car/update", car);
+  return data;
+};
