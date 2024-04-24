@@ -7,7 +7,8 @@ import {
   fetchBrands,
   fetchCars,
   fetchTypes,
-  fetchOneCar
+  fetchOneCar,
+  deleteOneCar
 } from "../../http/carAPI";
 
 const EditCar = observer(({carData, setCarData, show, onHide }) => {
@@ -17,6 +18,8 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
   const [name, setName] = useState(carData.name);
   const [price, setPrice] = useState(carData.price);
   const [info, setInfo] = useState(carData.info);
+  const [typeId, setTypeId] = useState(carData.typeId);
+  const [brandId, setBrandId] = useState(carData.brandId);
   const [file, setFile] = useState(null);
 
   useEffect(() => {
@@ -48,6 +51,8 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     setName(carData.name);
     setPrice(carData.price);
     setInfo(carData.info);
+    setTypeId (carData.typeId);
+    setBrandId(carData.brandId);
     setFile(null);
   }, [carData]);
   
@@ -69,14 +74,14 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          df
+          {carData.id}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedType?.name || "Выберите тип"}
+              {carStore.selectedType?.name || typeId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.types.map((type) => (
@@ -91,7 +96,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedBrand?.name || "Выберите бренд"}
+              {carStore.selectedBrand?.name || brandId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.brands.map((brand) => (
@@ -119,17 +124,24 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
           />
           <Form.Control className="mt-3" type="file" onChange={selectFile} />
           <hr />
+         
           
+       
           <Button onClick={addInfo}>Добавить свойство</Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>
+         <Button variant="outline-danger" onClick={()=>{deleteOneCar(carData.id); onHide();}}>
+          Удалить
+        </Button>
         <Button variant="outline-danger" onClick={onHide}>
           Закрыть
         </Button>
         <Button variant="outline-success" onClick={addCar}>
-          Добавить
+          Сохранить изменения
         </Button>
+        
+         
       </Modal.Footer>
     </Modal>
   );
