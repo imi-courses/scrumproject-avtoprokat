@@ -7,14 +7,17 @@ import {
   fetchBrands,
   fetchCars,
   fetchTypes,
+  fetchOneCar
 } from "../../http/carAPI";
 
-const EditCar = observer(({ show, onHide }) => {
+const EditCar = observer(({carData, setCarData, show, onHide }) => {
   const { car: carStore } = useContext(Context);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+
+
+  const [name, setName] = useState(carData.name);
+  const [price, setPrice] = useState(carData.price);
+  const [info, setInfo] = useState(carData.info);
   const [file, setFile] = useState(null);
-  const [info, setInfo] = useState([]);
 
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
@@ -41,6 +44,14 @@ const EditCar = observer(({ show, onHide }) => {
     setFile(e.target.files[0]);
   };
 
+   useEffect(() => {
+    setName(carData.name);
+    setPrice(carData.price);
+    setInfo(carData.info);
+    setFile(null);
+  }, [carData]);
+  
+
   const addCar = () => {
     const formData = new FormData();
     formData.append("name", name);
@@ -58,7 +69,7 @@ const EditCar = observer(({ show, onHide }) => {
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить машину
+          df
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -97,41 +108,18 @@ const EditCar = observer(({ show, onHide }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
-            placeholder="Введите название машины"
+          
           />
           <Form.Control
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="mt-3"
-            placeholder="Введите стоимость машины"
+          
             type="number"
           />
           <Form.Control className="mt-3" type="file" onChange={selectFile} />
           <hr />
-          {info.map((item, index) => (
-            <div key={item.number}>
-              <Form.Control
-                placeholder="Введите название свойства"
-                value={item.title}
-                onChange={(e) =>
-                  handleInfoChange(index, "title", e.target.value)
-                }
-                className="my-2"
-              />
-              <Form.Control
-                placeholder="Введите описание свойства"
-                value={item.description}
-                onChange={(e) =>
-                  handleInfoChange(index, "description", e.target.value)
-                }
-                className="my-2"
-              />
-              <Button variant="danger" onClick={() => handleDeleteInfo(index)}>
-                Удалить
-              </Button>
-              <hr />
-            </div>
-          ))}
+          
           <Button onClick={addInfo}>Добавить свойство</Button>
         </Form>
       </Modal.Body>

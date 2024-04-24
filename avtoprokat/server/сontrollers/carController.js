@@ -82,6 +82,44 @@ class CarController {
         return res.json(car)
     }
 
+    async update(req, res, next) {
+    try {
+      let { name, price, id } = req.body;
+      if (req.files != null) {
+        const { img } = req.files;
+        let fileName = uuid.v4() + ".jpg";
+        img.mv(path.resolve(__dirname, "..", "static/userImgs", fileName));
+        const car = Car.update(
+          {
+            name: name,
+            price: price,
+            //brandId: brandId,
+            //typeId: typeId,
+            img: "userImgs/" + fileName,
+          },
+          { where: { id } }
+        );
+        return res.json(car);
+      } else {
+        const car = Car.update(
+          {
+            name: name,
+            price: price,
+            //brandId: brandId,
+            //typeId: typeId,
+          },
+          { where: { id } }
+        );
+        return res.json(car);
+      }
+
+      //const user = await User.update({ where: _id });
+      // return res.json(user);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
 }
 
 module.exports = new CarController();
