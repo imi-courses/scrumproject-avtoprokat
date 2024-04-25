@@ -89,7 +89,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
         <Form>
          <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedType?.name || "Выберите тип"}
+              {carStore.selectedType?.name || typeId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.types.map((type) => (
@@ -104,7 +104,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedBrand?.name || "Выберите бренд"}
+              {carStore.selectedBrand?.name || brandId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.brands.map((brand) => (

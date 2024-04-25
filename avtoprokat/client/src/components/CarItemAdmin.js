@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 import { fetchOneCar } from "../http/carAPI";
 
 
-const CarItemAdmin = observer(({car}) => {
+const CarItemAdmin = ({car}) => {
   const [carData, setCarData] = useState({});
   useEffect(() => {
     fetchOneCar(car.id).then((data) => setCarData(data));
@@ -40,6 +40,6 @@ const CarItemAdmin = observer(({car}) => {
     <EditCar carData={carData} setCarData={setCarData} show={carVisible} onHide={() => setCarVisible(false)} />
    </Container>
   );
-});
+};
 
 export default CarItemAdmin;

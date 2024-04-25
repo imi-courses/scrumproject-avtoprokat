@@ -22,7 +22,7 @@ const Admin = observer(() => {
   }, []);
 
   useEffect(() => {
-    fetchCars(null, null, 1, 3).then((data) => {
+    fetchCars(null, null, carStore.page ? carStore.page : 1, 3).then((data) => {
       carStore.setCars(data.rows);
       carStore.setTotalCount(data.count);
     });
