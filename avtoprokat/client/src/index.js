@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import UserStore from "./store/UserStore";
 import CarStore from "./store/CarStore";
+import BasketStore from "./store/BasketStore";
 
 export const Context = createContext(null);
 
@@ -14,6 +15,7 @@ root.render(
     value={{
       user: new UserStore(),
       car: new CarStore(),
+      basket: new BasketStore(),
     }}
   >
     <App />

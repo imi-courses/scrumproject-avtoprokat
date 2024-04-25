@@ -6,4 +6,5 @@ export const BASKET_ROUTE = "/basket";
 export const CAR_ROUTE = "/car";
 export const USERPAGE_ROUTE = "/profile";
 export const EDIT_CAR_ROUTE = "/edit";
-
+export const APPLICATIONS_ROUTE = "/applications";
+export const ADMIN_APPLICATIONS_ROUTE = "/admin/applications";

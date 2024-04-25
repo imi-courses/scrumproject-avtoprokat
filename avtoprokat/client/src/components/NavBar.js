@@ -8,6 +8,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import {
   ADMIN_ROUTE,
+  BASKET_ROUTE,
   LOGIN_ROUTE,
   SHOP_ROUTE,
   USERPAGE_ROUTE,
@@ -16,19 +17,21 @@ import { useNavigate } from "react-router-dom";
 import { fetchUser } from "../http/userAPI";
 
 const NavBar = observer(() => {
-  const { user: userStore } = useContext(Context);
+  const { user: userStore, basket: basketStore } = useContext(Context);
   const navigate = useNavigate();
 
   const logOut = async () => {
     let data = await fetchUser();
     if (data.role == "ADMIN") {
-      userStore.setIsAuth(false);
+      userStore.setisAdmin(false);
       userStore.setIsUser(false);
     } else {
       userStore.setIsUser(false);
     }
     userStore.setUser({});
+
     localStorage.clear("token");
+    basketStore.setCars([]);
     navigate(LOGIN_ROUTE);
   };
 
@@ -39,13 +42,20 @@ const NavBar = observer(() => {
           Автопрокат №1
         </NavLink>
         {userStore.isUser ? (
-          userStore.isAuth ? (
+          userStore.isAdmin ? (
             <Nav className="ml-auto" style={{ color: "white" }}>
               <Button
                 variant={"outline-light"}
                 onClick={() => navigate(ADMIN_ROUTE)}
               >
                 Админ панель
+              </Button>
+              <Button
+                variant={"outline-light"}
+                onClick={() => navigate(BASKET_ROUTE)}
+                className="ms-2"
+              >
+                Корзина
               </Button>
               <Button
                 variant={"outline-light"}
@@ -64,6 +74,13 @@ const NavBar = observer(() => {
             </Nav>
           ) : (
             <Nav className="ml-auto" style={{ color: "white" }}>
+              <Button
+                variant={"outline-light"}
+                onClick={() => navigate(BASKET_ROUTE)}
+                className="ms-2"
+              >
+                Корзина
+              </Button>
               <Button
                 variant={"outline-light"}
                 onClick={() => navigate(USERPAGE_ROUTE)}
