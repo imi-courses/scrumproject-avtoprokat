@@ -16,14 +16,14 @@ const App = observer(() => {
       .then((_) => {
         userStore.setUser(userStore.user);
         userStore.setIsUser(true);
-        userStore.setIsAuth(false);
+        userStore.setisAdmin(false);
       })
       .catch(() => {});
     checkAdmin()
       .then((_) => {
         userStore.setUser(userStore.user);
         userStore.setIsUser(true);
-        userStore.setIsAuth(true);
+        userStore.setisAdmin(true);
       })
       .catch(() => {})
       .finally(() => setLoading(false));

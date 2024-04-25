@@ -1,5 +1,5 @@
-import React, { useState ,useContext, useEffect} from "react";
-import { Button, Container,Row,Col } from "react-bootstrap";
+import React, { useState, useContext, useEffect } from "react";
+import { Button, Container, Row, Col } from "react-bootstrap";
 import CreateBrand from "../components/modals/CreateBrand";
 import CreateCar from "../components/modals/CreateCar";
 import CreateType from "../components/modals/CreateType";
@@ -8,9 +8,12 @@ import Pages from "../components/Pages";
 import { observer } from "mobx-react-lite";
 import { Context } from "..";
 import { fetchBrands, fetchCars, fetchTypes } from "../http/carAPI";
+import { useNavigate } from "react-router-dom";
+import { ADMIN_APPLICATIONS_ROUTE } from "../utils/consts";
 
 const Admin = observer(() => {
   const { car: carStore } = useContext(Context);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
@@ -53,14 +56,19 @@ const Admin = observer(() => {
       >
         Добавить машину
       </Button>
+      <Button
+        variant="outline-dark"
+        className="mt-4 p-2"
+        onClick={() => navigate(ADMIN_APPLICATIONS_ROUTE)}
+      >
+        Посмотреть заявки
+      </Button>
       <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
       <CreateCar show={carVisible} onHide={() => setCarVisible(false)} />
       <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
-    
-          <CarListAdmin />
-         <Pages />
-      
-     
+
+      <CarListAdmin />
+      <Pages />
     </Container>
   );
 });
