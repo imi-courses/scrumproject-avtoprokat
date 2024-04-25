@@ -7,14 +7,21 @@ import {
   fetchBrands,
   fetchCars,
   fetchTypes,
+  updateCar,
+  deleteOneCar,
+  fetchOneCar
 } from "../../http/carAPI";
 
-const EditCar = observer(({ show, onHide }) => {
-  const { car: carStore } = useContext(Context);
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(0);
+const EditCar = observer(({carData, setCarData, show, onHide }) => {
+   const { car: carStore } = useContext(Context);
+
+  const [name, setName] = useState(carData.name);
+  const [price, setPrice] = useState(carData.price);
   const [file, setFile] = useState(null);
-  const [info, setInfo] = useState([]);
+  const [info, setInfo] = useState(carData.info);
+  const [typeId, setTypeId] = useState(carData.typeId);
+  const [brandId, setBrandId] = useState(carData.brandId);
+ 
 
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
@@ -41,31 +48,48 @@ const EditCar = observer(({ show, onHide }) => {
     setFile(e.target.files[0]);
   };
 
-  const addCar = () => {
+  const addCarData = () => {
     const formData = new FormData();
+    formData.append("id", parseInt(carData.id));
     formData.append("name", name);
     formData.append("price", `${price}`);
-    formData.append("img", file);
     formData.append("brandId", carStore.selectedBrand.id);
     formData.append("typeId", carStore.selectedType.id);
-    formData.append("info", JSON.stringify(info));
-    createCar(formData).then((data) => {
-      onHide();
-    });
+    //formData.append("info", JSON.stringify(info));
+     if (file != null) {
+      formData.append("img", file);
+    }
+    updateCar(formData)
+      .then((_) => {
+        onHide();
+        fetchOneCar(carData.id).then((data) => setCarData(data));
+      })
+      .catch((error) => {
+        alert(error.response.data.message);
+      });
   };
+
+  useEffect(() => {
+    setName(carData.name);
+    setPrice(carData.price);
+    setInfo(carData.info);
+    setTypeId (carData.typeId);
+    setBrandId(carData.brandId);
+    setFile(null);
+  }, [carData]); 
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Добавить машину
+          {carData.id}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Dropdown className="my-2">
+         <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedType?.name || "Выберите тип"}
+              {carStore.selectedType?.name || typeId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.types.map((type) => (
@@ -80,7 +104,7 @@ const EditCar = observer(({ show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedBrand?.name || "Выберите бренд"}
+              {carStore.selectedBrand?.name || brandId}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.brands.map((brand) => (
@@ -97,51 +121,33 @@ const EditCar = observer(({ show, onHide }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
-            placeholder="Введите название машины"
+          
           />
           <Form.Control
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="mt-3"
-            placeholder="Введите стоимость машины"
+          
             type="number"
           />
           <Form.Control className="mt-3" type="file" onChange={selectFile} />
           <hr />
-          {info.map((item, index) => (
-            <div key={item.number}>
-              <Form.Control
-                placeholder="Введите название свойства"
-                value={item.title}
-                onChange={(e) =>
-                  handleInfoChange(index, "title", e.target.value)
-                }
-                className="my-2"
-              />
-              <Form.Control
-                placeholder="Введите описание свойства"
-                value={item.description}
-                onChange={(e) =>
-                  handleInfoChange(index, "description", e.target.value)
-                }
-                className="my-2"
-              />
-              <Button variant="danger" onClick={() => handleDeleteInfo(index)}>
-                Удалить
-              </Button>
-              <hr />
-            </div>
-          ))}
+         
+          
+       
           <Button onClick={addInfo}>Добавить свойство</Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>
+         <Button variant="outline-danger" onClick={()=>{deleteOneCar(carData.id); onHide();}}>
+          Удалить
+        </Button>
         <Button variant="outline-danger" onClick={onHide}>
           Закрыть
         </Button>
-        <Button variant="outline-success" onClick={addCar}>
-          Добавить
-        </Button>
+        <Button variant="outline-success" onClick={addCarData}>
+          Сохранить изменения
+        </Button>         
       </Modal.Footer>
     </Modal>
   );

@@ -1,15 +1,26 @@
-import React from "react";
-import { Card, Col, Image } from "react-bootstrap";
+import React , { useState ,useContext, useEffect} from "react";
+import { Card, Col, Image,Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { EDIT_CAR_ROUTE } from "../utils/consts";
+import { CAR_ROUTE } from "../utils/consts";
+import EditCar from "../components/modals/EditCar";
+import { observer } from "mobx-react-lite";
+import { fetchOneCar } from "../http/carAPI";
 
-const CarItem = ({ car }) => {
+
+const CarItemAdmin = ({car}) => {
+  const [carData, setCarData] = useState({});
+  useEffect(() => {
+    fetchOneCar(car.id).then((data) => setCarData(data));
+  }, []);
+  const [carVisible, setCarVisible] = useState(false);
   const navigate = useNavigate();
+  
   return (
+    <Container>
     <Col
       md={3}
       className={"mt-3"}
-      onClick={() => navigate(EDIT_CAR_ROUTE + "/" + car.id)}
+      onClick={() => {setCarVisible(true)}}
     >
       <Card style={{ cursor: "pointer" }} border={"light"}>
         <Image
@@ -24,8 +35,11 @@ const CarItem = ({ car }) => {
         </div>
         <div>{car.name}</div>
       </Card>
+       
     </Col>
+    <EditCar carData={carData} setCarData={setCarData} show={carVisible} onHide={() => setCarVisible(false)} />
+   </Container>
   );
 };
 
-export default CarItem;
+export default CarItemAdmin;

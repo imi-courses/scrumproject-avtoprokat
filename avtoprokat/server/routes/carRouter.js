@@ -8,5 +8,6 @@ router.get("/", carController.getAll);
 router.get("/:id", carController.getOne);
 router.get("edit/:id", carController.getOne);
 router.delete("/:id", carController.deleteOne);
+router.post("/:id", carController.updateCar); 
 
 module.exports = router;
