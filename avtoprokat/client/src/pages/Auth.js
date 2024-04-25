@@ -24,11 +24,11 @@ const Auth = observer(() => {
       }
       userStore.setUser(data);
       if (data.role == "USER") {
-        userStore.setIsAuth(false);
+        userStore.setisAdmin(false);
         userStore.setIsUser(true);
       } else if (data.role == "ADMIN") {
         userStore.setIsUser(true);
-        userStore.setIsAuth(true);
+        userStore.setisAdmin(true);
       }
       navigate(SHOP_ROUTE);
     } catch (e) {

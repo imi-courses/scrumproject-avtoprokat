@@ -13,12 +13,15 @@ const User = sequelize.define("user", {
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
-const Basket = sequelize.define("basket", {
+const Application = sequelize.define("application", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-const BasketCar = sequelize.define("basket_car", {
+const ApplicationCar = sequelize.define("application_car", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  date_start: { type: DataTypes.DATE, allowNull: false },
+  date_end: { type: DataTypes.DATE, allowNull: false },
+  status: { type: DataTypes.STRING, defaultValue: "WAITING" },
 });
 
 const Car = sequelize.define("car", {
@@ -54,14 +57,8 @@ const TypeBrand = sequelize.define("type_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-User.hasOne(Basket);
-Basket.belongsTo(User);
-
 User.hasMany(Rating);
 Rating.belongsTo(User);
-
-Basket.hasMany(BasketCar);
-BasketCar.belongsTo(Basket);
 
 Type.hasMany(Car);
 Car.belongsTo(Type);
@@ -72,23 +69,29 @@ Car.belongsTo(Brand);
 Car.hasMany(Rating);
 Rating.belongsTo(Car);
 
-Car.hasMany(BasketCar);
-BasketCar.belongsTo(Car);
-
 Car.hasMany(CarInfo, { as: "info" });
 CarInfo.belongsTo(Car);
 
 Type.belongsToMany(Brand, { through: TypeBrand });
 Brand.belongsToMany(Type, { through: TypeBrand });
 
+User.hasMany(Application);
+Application.belongsTo(User);
+
+Application.hasMany(ApplicationCar, { as: "application_cars" });
+ApplicationCar.belongsTo(Application);
+
+Car.hasMany(ApplicationCar);
+ApplicationCar.belongsTo(Car);
+
 module.exports = {
   User,
-  Basket,
-  BasketCar,
   Car,
   Type,
   Brand,
   Rating,
   TypeBrand,
   CarInfo,
+  Application,
+  ApplicationCar,
 };

@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Image, Row } from "react-bootstrap";
 import { fetchUser } from "../http/userAPI";
 import CreateUserData from "../components/modals/CreateUserData";
+import { APPLICATIONS_ROUTE } from "../utils/consts";
+import { useNavigate } from "react-router-dom";
 
 const UserPage = () => {
+  const navigate = useNavigate();
   const [userVisible, setUserVisible] = useState(false);
   const [userData, setUserData] = useState({});
   useEffect(() => {
@@ -74,6 +77,9 @@ const UserPage = () => {
           </Button>
         </Col>
       </Row>
+      <Button variant="primary" onClick={() => navigate(APPLICATIONS_ROUTE)}>
+        История аренд
+      </Button>
       {userData && (
         <CreateUserData
           userData={userData}
