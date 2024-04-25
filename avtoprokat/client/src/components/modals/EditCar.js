@@ -61,7 +61,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     updateCar(formData)
       .then((_) => {
         onHide();
-        fetchOneCar().then((data) => setCarData(data));
+        fetchOneCar(carData.id).then((data) => setCarData(data));
       })
       .catch((error) => {
         alert(error.response.data.message);
