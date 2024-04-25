@@ -13,14 +13,15 @@ import {
 } from "../../http/carAPI";
 
 const EditCar = observer(({carData, setCarData, show, onHide }) => {
-  const { car: carStore } = useContext(Context);
+   const { car: carStore } = useContext(Context);
 
   const [name, setName] = useState(carData.name);
   const [price, setPrice] = useState(carData.price);
+  const [file, setFile] = useState(null);
   const [info, setInfo] = useState(carData.info);
   const [typeId, setTypeId] = useState(carData.typeId);
   const [brandId, setBrandId] = useState(carData.brandId);
-  const [file, setFile] = useState(null);
+ 
 
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
@@ -52,8 +53,8 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     formData.append("id", parseInt(carData.id));
     formData.append("name", name);
     formData.append("price", `${price}`);
-    //formData.append("brandId", carStore.selectedBrand.id);
-    //formData.append("typeId", carStore.selectedType.id);
+    formData.append("brandId", carStore.selectedBrand.id);
+    formData.append("typeId", carStore.selectedType.id);
     //formData.append("info", JSON.stringify(info));
      if (file != null) {
       formData.append("img", file);
@@ -75,7 +76,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     setTypeId (carData.typeId);
     setBrandId(carData.brandId);
     setFile(null);
-  }, [carData]);
+  }, [carData]); 
 
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
@@ -86,9 +87,9 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-          <Dropdown className="my-2">
+         <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedType?.name || typeId}
+              {carStore.selectedType?.name || "Выберите тип"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.types.map((type) => (
@@ -103,7 +104,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
           </Dropdown>
           <Dropdown className="my-2">
             <Dropdown.Toggle>
-              {carStore.selectedBrand?.name || brandId}
+              {carStore.selectedBrand?.name || "Выберите бренд"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
               {carStore.brands.map((brand) => (
@@ -146,9 +147,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
         </Button>
         <Button variant="outline-success" onClick={addCarData}>
           Сохранить изменения
-        </Button>
-        
-         
+        </Button>         
       </Modal.Footer>
     </Modal>
   );
