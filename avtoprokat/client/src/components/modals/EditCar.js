@@ -9,20 +9,16 @@ import {
   fetchTypes,
   updateCar,
   deleteOneCar,
-  fetchOneCar
+  fetchOneCar,
 } from "../../http/carAPI";
-
-const EditCar = observer(({carData, setCarData, show, onHide }) => {
-   const { car: carStore } = useContext(Context);
-
+const EditCar = observer(({ carData, setCarData, show, onHide }) => {
+  const { car: carStore } = useContext(Context);
   const [name, setName] = useState(carData.name);
   const [price, setPrice] = useState(carData.price);
-  const [file, setFile] = useState(null);
   const [info, setInfo] = useState(carData.info);
   const [typeId, setTypeId] = useState(carData.typeId);
   const [brandId, setBrandId] = useState(carData.brandId);
- 
-
+  const [file, setFile] = useState(null);
   useEffect(() => {
     fetchTypes().then((data) => carStore.setTypes(data));
     fetchBrands().then((data) => carStore.setBrands(data));
@@ -43,41 +39,38 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
     let newInfo = [...info.filter((_, filterIndex) => filterIndex !== index)];
     setInfo(newInfo);
   };
-
   const selectFile = (e) => {
     setFile(e.target.files[0]);
   };
-
   const addCarData = () => {
     const formData = new FormData();
     formData.append("id", parseInt(carData.id));
     formData.append("name", name);
     formData.append("price", `${price}`);
-    formData.append("brandId", carStore.selectedBrand.id);
-    formData.append("typeId", carStore.selectedType.id);
+    //formData.append("brandId", carStore.selectedBrand.id);
+    //formData.append("typeId", carStore.selectedType.id);
     //formData.append("info", JSON.stringify(info));
-     if (file != null) {
+    if (file != null) {
       formData.append("img", file);
     }
     updateCar(formData)
       .then((_) => {
         onHide();
+
         fetchOneCar(carData.id).then((data) => setCarData(data));
       })
       .catch((error) => {
         alert(error.response.data.message);
       });
   };
-
   useEffect(() => {
     setName(carData.name);
     setPrice(carData.price);
     setInfo(carData.info);
-    setTypeId (carData.typeId);
+    setTypeId(carData.typeId);
     setBrandId(carData.brandId);
     setFile(null);
-  }, [carData]); 
-
+  }, [carData]);
   return (
     <Modal show={show} onHide={onHide} size="lg" centered>
       <Modal.Header closeButton>
@@ -87,7 +80,7 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
       </Modal.Header>
       <Modal.Body>
         <Form>
-         <Dropdown className="my-2">
+          <Dropdown className="my-2">
             <Dropdown.Toggle>
               {carStore.selectedType?.name || typeId}
             </Dropdown.Toggle>
@@ -121,25 +114,27 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             className="mt-3"
-          
           />
           <Form.Control
             value={price}
             onChange={(e) => setPrice(Number(e.target.value))}
             className="mt-3"
-          
             type="number"
           />
           <Form.Control className="mt-3" type="file" onChange={selectFile} />
           <hr />
-         
-          
-       
+
           <Button onClick={addInfo}>Добавить свойство</Button>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-         <Button variant="outline-danger" onClick={()=>{deleteOneCar(carData.id); onHide();}}>
+        <Button
+          variant="outline-danger"
+          onClick={() => {
+            deleteOneCar(carData.id);
+            onHide();
+          }}
+        >
           Удалить
         </Button>
         <Button variant="outline-danger" onClick={onHide}>
@@ -147,10 +142,9 @@ const EditCar = observer(({carData, setCarData, show, onHide }) => {
         </Button>
         <Button variant="outline-success" onClick={addCarData}>
           Сохранить изменения
-        </Button>         
+        </Button>
       </Modal.Footer>
     </Modal>
   );
 });
-
 export default EditCar;
