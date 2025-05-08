@@ -1,0 +1,65 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Основные стили для футера */
+.footer {
+  padding: 20px 0; /* Установите желаемую высоту отступов для футера */
+  position: sticky; /* Позиционирование внизу страницы */
+  bottom: 0;
+  width: 100%; /* Гарантирует, что футер будет занимать всю ширину */
+  z-index: 1000; /* Убедится, что футер находится над другими элементами */
+}
+
+/* Дополнительные стили для ссылок в футере */
+.footer .nav-link {
+  color: white; /* Белый цвет текста для ссылок */
+  opacity: 0.75; /* Слегка прозрачный для лучшего визуального эффекта */
+}
+
+.footer .nav-link:hover {
+  opacity: 1; /* Полная непрозрачность при наведении */
+  text-decoration: none; /* Удаление подчеркивания при наведении */
+}
+
+/* Центрирование содержимого футера */
+.footer .container {
+  display: flex;
+  flex-direction: column; /* Элементы в колонке для лучшего визуального представления */
+  align-items: center; /* Центрирование элементов по горизонтали */
+  justify-content: center; /* Центрирование элементов по вертикали */
+}
